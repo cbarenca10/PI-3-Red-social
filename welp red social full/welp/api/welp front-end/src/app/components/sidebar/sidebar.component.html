@@ -1,0 +1,93 @@
+<div id="user-card" class="col-lg-4 card card-default pull-left" style="margin-top:-670px;">
+    <div class="avatar pull-left">
+        <img src="{{ url + 'get-image-user/' + identity.image }}" *ngIf="identity.image" />
+        <img src="assets/user.png" *ngIf="!identity.image" />
+    </div>
+
+    <div class="name-surname pull-left">
+        <a [routerLink]="['/perfil',identity._id]" class="username">
+			{{identity.name +' '+ identity.surname}}
+    	</a>
+        <p class="nickname">{{identity.nick}}</p>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="stats" *ngIf="stats">
+        <div class="following-data">
+            <a [routerLink]="['/siguiendo',identity._id,1]">
+                <span class="label-stats">
+        			Siguiendo
+            	</span>
+                <span class="number-stats">
+					{{stats.following}}
+				</span>
+            </a>
+        </div>
+
+        <div class="following-data">
+            <a [routerLink]="['/seguidores',identity._id,1]">
+                <span class="label-stats">
+        			Seguidores
+            	</span>
+                <span class="number-stats">
+					{{stats.followed}}
+				</span>
+            </a>
+        </div>
+
+        <div class="following-data">
+            <a [routerLink]="['/perfil',identity._id]">
+                <span class="label-stats">
+        			Publicaciones
+            	</span>
+                <span class="number-stats">
+					{{stats.publications}}
+				</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="card text-white bg-info mb-3" style="width:200px;margin-left:1100px;margin-top:-200px;">
+    <div class="card-header"><i class="fas fa-exclamation-triangle"></i>Noticia del dia</div>
+    <div class="card-body">
+        <h5 class="card-title">Incendios en Australia</h5>
+        <p class="card-text">Más de un millon de hectareas se ven afectadas y 10,000 especies</p>
+    </div>
+</div>
+
+<div class="card" style="width:200px;margin-left:10px;margin-top: -30px;">
+    <div class="card-header">
+        Proximos eventos
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item active">12/07/2020</li>
+        <li class="list-group-item">14/10/2020</li>
+        <li class="list-group-item">24/11/2020</li>
+    </ul>
+</div>
+
+
+
+<!--formulario de publicaciones-->
+<div id="new-publication" class="card" style="margin-top:-530px;width:600px;height:210px;margin-left:450px;">
+
+    <form #newPubForm="ngForm" (ngSubmit)="onSubmit(newPubForm, $event);" class="col-lg-10">
+        <p>
+            <label>¿Que estas pensando hoy?</label>
+            <textarea name="text" #text="ngModel" [(ngModel)]="publication.text" class="form-control" required></textarea>
+            <span *ngIf="!text.valid && text.touched">
+				El texto de la publicación es obliatorio
+			</span>
+        </p>
+
+        <p>
+            <label>Sube tu foto</label>
+            <input type="file" placeholder="Subir imagen" (change)="fileChangeEvent($event)" />
+        </p>
+
+        <input type="submit" value="Enviar" class="btn btn-success" [disabled]="!newPubForm.form.valid" />
+    </form>
+</div>

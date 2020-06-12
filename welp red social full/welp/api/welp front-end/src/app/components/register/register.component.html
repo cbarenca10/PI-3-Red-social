@@ -1,0 +1,125 @@
+<div class="col-lg-5" class="fondo">
+    <div class="login">
+        <h3>Registro</h3>
+        <br>
+        <div class="alert alert-success" *ngIf="status == 'success'">
+            Bienvenido a Welp
+        </div>
+
+        <div class="alert alert-success" *ngIf="status == 'success'">
+            Registro completado correctamente, <a [routerLink]="['/login']">identificate aquí</a>
+        </div>
+
+        <div class="alert alert-danger" *ngIf="status == 'error'">
+            El registro no ha podido completarse, quizas tu email o nickname ya esté en uso, intentalo de nuevo con otros datos
+        </div>
+
+        <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="col-lg-12">
+            <p>
+                <label>Nombre</label>
+                <input type="text" name="name" #name="ngModel" [(ngModel)]="user.name" class="form-control" required />
+                <span *ngIf="!name.valid && name.touched">
+					El nombre es obligatorio!!
+				</span>
+            </p>
+
+            <p>
+                <label>Apellidos</label>
+                <input type="text" name="surname" #surname="ngModel" [(ngModel)]="user.surname" class="form-control" required />
+                <span *ngIf="!surname.valid && surname.touched">
+					Los apellidos son obligatorios!!
+				</span>
+            </p>
+
+            <p>
+                <label>Apodo</label>
+                <input type="text" name="nick" #nick="ngModel" [(ngModel)]="user.nick" class="form-control" required />
+                <span *ngIf="!nick.valid && nick.touched">
+					El apodo es obligatorio!!
+				</span>
+            </p>
+
+            <p>
+                <label>Correo Electronico</label>
+                <input type="email" name="email" #email="ngModel" [(ngModel)]="user.email" class="form-control" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" /> <br>
+                <span *ngIf="!email.valid && email.touched">
+					Tu correo es muy importante para nosotros
+				</span>
+            </p>
+
+            <p>
+                <label>Contraseña</label>
+                <input type="password" name="password" #password="ngModel" [(ngModel)]="user.password" class="form-control" required />
+                <span *ngIf="!password.valid && password.touched">
+					La constraseña es obligatoria!!
+				</span>
+            </p>
+            <p>
+                <label class="input-group-text" for="inputGroupSelect01"> Rol &nbsp;
+				 <select class="custom-select" type="role" name="role" #role="ngModel"
+				 [(ngModel)]="user.role" class="form-control" required>
+						<option value="Beneficiario">Voluntario</option>
+						<option value="ONG">ONG o grupo de voluntariado</option>
+				 </select>
+				</label>
+                <span *ngIf="!role.valid && role.touched">
+						Tu papel en nuestra red social, es muy importante.
+				</span>
+            </p>
+
+            <p>
+                <label class="input-group-text" for="inputGroupSelect02"> Continente &nbsp;
+				 <select class="custom-select" type="continente" name="continente" #continente="ngModel"
+				 [(ngModel)]="user.continente" class="form-control" required>
+						<option value="Africa">Africa</option>
+						<option value="America">America</option>
+						 <option value="Asia">Asia</option>
+						<option value="Austarlia">Austarlia</option>
+						<option value="Europa">Europa</option>
+				 </select>
+				</label>
+                <span *ngIf="!continente.valid && continente.touched">
+						Tu papel en nuestra red social, es muy importante.
+				</span>
+            </p>
+
+            <p>
+                <label class="input-group-text" for="inputGroupSelect02"> Grupo de ayuda &nbsp;
+				 <select class="custom-select" type="ayuda" name="ayuda" #ayuda="ngModel"
+				 [(ngModel)]="user.ayuda" class="form-control" required>
+						<option value="Fin de la pobreza">Fin de la pobreza</option>
+						<option value="Hambre cero">Hambre cero</option>
+						 <option value="Salud y bienestar">Salud y bienestar</option>
+						<option value="Educación de calidad">Educación de calidad</option>
+						<option value="Igualdad de genero">Igualdad de genero</option>
+						<option value="Agua limpia y saneamiento">Agua limpia y saneamiento</option>
+						<option value="Energia asequible y no contaminante">Energia asequible y no contaminante</option>
+						 <option value="Trabajo decente y crecimiento económico">Trabajo decente y crecimiento económico</option>
+						<option value="Industria, innovación e infraestructura">Industria, innovación e infraestructura</option>
+						<option value="Reducción de las desigualdades">Reducción de las desigualdades </option>
+						<option value="Ciudades y comunidades sostenibles">Ciudades y comunidades sostenibles</option>
+						<option value="Producción y consumo responsable">Producción y consumo responsable</option>
+						 <option value="Acción por el clima">Acción por el clima</option>
+						<option value="Vida submarina">Vida submarina</option>
+						<option value="Vida de ecosistema terrestre">Vida de ecosistema terrestre</option>
+						<option value="Paz, justicia e instituciones sólidas">Paz, justicia e instituciones sólidas</option>
+						<option value="Alianzas para lograr los objetivos">Alianzas para lograr los objetivos</option>
+				 </select>
+				</label>
+                <span *ngIf="!ayuda.valid && ayuda.touched">
+						Tu papel en nuestra red social, es muy importante.
+				</span>
+            </p>
+
+            <p class="alert alert-success">
+                En base en el artículo 12: derecho a la intimidad publicada en las noticias que otorga la ONU (Organizaciones de las Naciones Unidas), Welp desea proporcionar el beneficio de tener privacidad de sus datos a elección del usuario, exhumando cualquier acusación
+                de tráfico de datos . Además de mantener su actividad sin algún fin de lucro. En caso contrario que alguna otra persona no trabajadora de Welp intenta robar los datos de nuestros usuarios contará con una demanda por dicho delito.
+            </p>
+
+
+
+            <input type="submit" value="{{title}}" class="btn btn-success" [disabled]="!registerForm.form.valid" />
+        </form>
+    </div>
+    <br><br><br><br><br>
+</div>

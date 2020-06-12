@@ -1,0 +1,110 @@
+<div class="col-lg-8">
+    <br>
+    <h4 class="h1-strong">Hola, {{identity.name}}
+        <button class="btn btn-success btn-sm" (click)="refresh($event)">Mostrar nuevas</button>
+    </h4>
+    <br>
+    <!--formulario de publicaciones-->
+
+
+    <!-----Termina parte de publicar---------->
+    <div id="publications" style="margin-top:160px;margin-left:450px;width: 600px; height: 150px; ">
+        <div *ngFor="let publication of publications " class="card mb-2 ">
+            <div class="card-header ">
+                <a [routerLink]="['/perfil',publication.user._id]">
+                    <img style="width: 30px; height: 30px; border-radius: 100px; margin-left:30px; " src="{{ url +'get-image-user/' + publication.user.image }}" *ngIf="publication.user.image" />
+
+                    <img style="width: 30px; height: 30px; border-radius: 100px; margin-left:30px; " src="../../../assets/1.png " class="avatar-default " *ngIf="!publication.user.image " /> {{publication.user.name}}</a>
+                <span class="user-name">
+                        {{publication.user.name + ' ' + publication.user.surname }}
+                    </span> &nbsp;|&nbsp;
+                <span class="date" style="color: gray">
+                            {{ (publication.created_at | amFromUnix) | amLocale: 'es' | amTimeAgo }}
+                        </span>
+                <div *ngIf="publication.user._id == identity._id" style="margin-left:500px;margin-top:-10px;">
+
+                    &nbsp;
+                    <!-- Button HTML (to Trigger Modal) -->
+                    <a href="#myModal{{publication._id}}" role="button" class="btn btn-large btn-danger" data-toggle="modal" *ngIf="showImage != publication._id">
+
+                        <i class="far fa-trash-alt"></i>
+                    </a>
+
+
+                    <!-- Modal HTML -->
+                    <div id="myModal{{publication._id}}" class="modal fade">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title">
+                                        ¿Seguro que quieres eliminar la publicación?
+                                    </h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Si la borras no podrás recuperarla</p>
+                                    <p>{{publication.text}}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-primary" (click)="deletePublication(publication._id)" data-dismiss="modal"> 
+                                                                Borrar la publicación
+                                                            </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="card-body ">
+                <p>{{publication.text}}</p>
+                <!--Comienzan ajustes de imagen en la publicacion-->
+
+
+                <div class="pull-right" *ngIf="publication.file != 'null' ">
+                    <button class="btn btn-warning pull-right" (click)="showThisImage(publication._id)" *ngIf="showImage != publication._id">
+                        <i class="far fa-images"></i>
+						</button>
+                    <button class="btn btn-danger pull-right" (click)="hideThisImage(publication._id)" *ngIf="showImage == publication._id">
+						<i class="far fa-images"></i>
+						</button>
+                </div>
+                <div class="col-lg-12" *ngIf="publication.file != 'null' && showImage == publication._id">
+                    <br/>
+                    <img src="{{ url + 'get-image-pub/' + publication.file}}" class="col-lg-12" />
+                </div>
+                <!--Terminan ajustes de imagen en la pblicacion-->
+            </div>
+
+            <div class="card-footer ">
+                <button type="button " class="btn btn-link ">Ver comentarios</button>
+                <div class="spinner-border spinner-border-sm text-primary d-none " role="status ">
+                    <span class="sr-only ">Loading...</span>
+                </div>
+                <button type="button " class="btn btn-link d-none ">Ocultar comentarios</button>
+                <div class="card " style="display:none; ">
+                    <ul class="list-group list-group-flush ">
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-lg-12 text-center" *ngIf="publications && publications.length">
+            <p>
+                <button class="btn btn-success" (click)="viewMore()" *ngIf="!noMore">
+                        Ver más publicaciones
+                    </button>
+            </p>
+        </div>
+    </div>
+
+</div>
+
+
+<sidebar (sended)="refresh($event)"></sidebar>
+
+<div class="clearfix"></div>

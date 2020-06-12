@@ -1,0 +1,92 @@
+<div class="col-lg-8">
+
+
+    <div style="position: relative;">
+        <img src="assets/port.png" style="position: absolute; width:1280px;">
+        <div id="data-profile" *ngIf="user">
+            <div class="avatar pull-left" style="position: absolute;margin-top:230px;left:520px;">
+                <img style="width: 150px; height:150px; border-radius: 100px; margin-left:30px; " src="{{url +'get-image-user/' + user.image}}" *ngIf="user.image" />
+
+                <img style="width: 150px; height: 150px; border-radius: 100px; margin-left:30px;" src="../../../assets/1.png" class="avatar-default" *ngIf="!user.image" />
+
+
+
+            </div>
+            <div style="position: absolute;margin-top:400px;left:560px;">
+
+                <b style="color:white; font-size:22px;">{{user.name +' '+ user.surname}} </b>
+                <br>
+                <button class="btn btn-success" *ngIf="!following" (click)="followUser(user._id)">
+						Seguir
+					</button>
+                <button class="btn btn-primary" *ngIf="following" (click)="unfollowUser(user._id)" (mouseenter)="mouseEnter(user._id)" (mouseleave)="mouseLeave()" [class.btn-danger]="user._id == followUserOver">
+						 <span *ngIf="user._id == followUserOver; else following">
+							Dejar de seguir
+						</span>
+						<ng-template #following>
+							Siguiendo
+						</ng-template>
+					</button>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card" style="width: 18rem;" *ngIf="user">
+        <div class="card-header">
+
+            <div class="label label-default pull-left" *ngIf="followed">
+                Te sigue
+            </div>
+            <div class="pull-left">
+                NOMBRE
+                <p class="name">{{user.name +' '+ user.surname}}</p>
+                APODO
+                <p class="nick">{{user.nick}}</p>
+            </div>
+
+
+        </div>
+        <div class="list-group list-group-flush" style="color:black;" *ngIf="stats">
+            <div class="list-group-item">
+                <a [routerLink]="['/siguiendo', user._id, 1]">
+                    <span class="label-stats">
+						Siguiendo
+					</span>
+                    <span class="number-stats">
+						{{stats.following}}
+					</span>
+                </a>
+            </div>
+
+            <div class="list-group-item">
+                <a [routerLink]="['/seguidores',user._id,1]">
+                    <span class="label-stats">
+						Seguidores
+					</span>
+                    <span class="number-stats">
+						{{stats.followed}}
+					</span>
+                </a>
+            </div>
+            <div class="list-group-item">
+                <a href="#">
+                    <span class="label-stats">
+						Publicaciones 
+					</span>
+                    <span class="number-stats">
+						{{stats.publications}}
+					</span>
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="col-lg-12 publications" *ngIf="user">
+        <publications [user]="user._id"></publications>
+    </div>
+
+</div>
