@@ -1,0 +1,141 @@
+<div id="new-publication" class="col-lg-12 card card-body" style="width: 600px;height:200px; margin-left:350px;">
+
+    <div class="alert alert success" *ngIf="status == 'success'">
+        Publicacion Enviada correctamente
+    </div>
+    <div class="alert alert danger" *ngIf="status == 'error' ">
+        Publicacion no enviada
+    </div>
+
+    <form #newPubForm="ngForm" (ngSubmit)="onSubmit(newPubForm)" class="col-lg-10">
+        <p>
+            <label>¿Que estas pensado hoy?</label>
+            <textarea name="text" #text="ngModel" [(ngModel)]="publication.text" class="form-control" required></textarea>
+            <span *ngIf="!text.valid && text.touched">
+                El texto de la publicacion es obligatorio
+            </span>
+        </p>
+
+        <p>
+            <input type="file" />
+        </p>
+
+        <input type="submit" value="Enviar" class="btn btn-success" [disabled]="!newPubForm.form.valid" style="margin-left:350px; margin-top:-35px; " />
+    </form>
+</div>
+
+<!-----Termina parte de publicar---------->
+<div id="user-card" class="col-lg-4 card float-left" style="margin-top:-180px;">
+    <div class="avatar ">
+        <img style="height:150px;width:150px; " src="{{url + 'get-image-user/' + indentity.image}} " *ngIf="indentity.image " />
+        <img style="height:150px;width:150px; " src="assets/users.png " *ngIf="!indentity.image " />
+    </div>
+    <div>
+        <a href="# " style="color:black;font-size:16px; ">
+            {{indentity.name + ' ' + indentity.surname}}
+        </a>
+
+        <!-----Aqui incia uno de los errores---------->
+        <p class="nickname ">{{indentity.nick}}</p>
+        <!----LA palabra INDENTITY en el video dice identity-->
+        <div class="clearfix ">
+        </div>
+    </div>
+    <div class="clearfix "></div>
+    <div class="stats " *ngIf="stats ">
+        <div class="following-data ">
+            <a href="# ">
+                <span class="label-stats " style="color:black;font-size:15px; ">Siguiendo </span>
+                <span class="number-stats " style="color:black;font-size:15px; ">{{stats.following}}  </span>
+            </a>
+
+        </div>
+        <div class="following-data ">
+            <a href="# ">
+                <span class="label-stats " style="color:black;font-size:15px; ">Seguidores </span>
+                <span class="number-stats " style="color:black;font-size:15px; ">{{stats.followed}}  </span>
+            </a>
+
+        </div>
+        <div class="following-data ">
+            <a href="# ">
+                <span class="label-stats " style="color:black;font-size:15px; ">Publicaciones </span>
+                <span class="number-stats " style="color:black;font-size:15px; ">{{stats.publications}}</span>
+            </a>
+
+        </div>
+    </div>
+    <br><br>
+</div>
+
+
+<!--inicio de agregar canales-->
+<div class="card " style="width: 18rem; margin-left:1000px; ">
+    <ul class="list-group list-group-flush ">
+        <li class="list-group-item ">Cras justo odio</li>
+        <li class="list-group-item ">Dapibus ac facilisis in</li>
+        <li class="list-group-item ">Vestibulum at eros</li>
+        <li class="list-group-item ">Cras justo odio</li>
+        <li class="list-group-item ">Dapibus ac facilisis in</li>
+        <li class="list-group-item ">Vestibulum at eros</li>
+    </ul>
+</div>
+<!--fin de agregar canales-->
+<!--inicio de recordatorios de eventos-->
+&nbsp;
+<div class="card " style="width: 18rem; margin-right:auto; margin-top:-120px;">
+    <ul class="list-group list-group-flush ">
+        <li class="list-group-item active ">15-06-2020</li>
+        <li class="list-group-item ">14-10-2020</li>
+        <li class="list-group-item ">15-10-2020</li>
+        <li class="list-group-item ">16-10-2020</li>
+        <li class="list-group-item ">17-10-2020</li>
+
+    </ul>
+</div>
+
+<!--fin de recordatorios de eventos-->
+<h1 class="h1-strong "></h1>
+
+<div class="publications " style="width: 600px;height:200px; margin-left:350px; margin-top:-300px; ">
+    <div *ngFor="let publication of publications " class="card mb-2 ">
+        <div class="card-header ">
+            <h3>
+                <img style="width: 30px; height: 30px; border-radius: 100px; margin-left:30px; " src="{{url + 'get-image-user/' + publication.user.image}} " *ngIf="publication.user.image " />
+
+                <img style="width: 30px; height: 30px; border-radius: 100px; margin-left:30px; " src="../../../assets/1.png " class="avatar-default " *ngIf="!publication.user.image " /> {{publication.user.name}}</h3>
+
+            <span class="date" style="color: gray">
+                    {{ (publication.created_at | amFromUnix) | amLocale: 'es' | amTimeAgo }}
+                </span>
+        </div>
+
+        <div class="card-body ">
+            <p>{{publication.text}}</p>
+        </div>
+
+        <div class="card-footer ">
+            <button type="button " class="btn btn-link ">Ver comentarios</button>
+            <div class="spinner-border spinner-border-sm text-primary d-none " role="status ">
+                <span class="sr-only ">Loading...</span>
+            </div>
+            <button type="button " class="btn btn-link d-none ">Ocultar comentarios</button>
+            <div class="card " style="display:none; ">
+                <ul class="list-group list-group-flush ">
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-12 text-center" *ngIf="publications && publications.length">
+        <p>
+            <button class="btn btn-success" (click)="viewMore()" *ngIf="!noMore">
+                Ver más publicaciones
+            </button>
+        </p>
+
+    </div>
+
+</div>

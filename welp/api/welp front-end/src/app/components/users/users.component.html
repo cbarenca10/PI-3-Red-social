@@ -1,0 +1,63 @@
+<sidebar></sidebar>
+<div class="col-md-8">
+    <br>
+    <h2 style="color:black; position:center;">Personas que te gustaria seguir</h2>
+    <br><br>
+
+    <div class="people">
+        <div *ngFor="let user of users" class="item-user">
+
+            <div class="card mb-3" style="max-width: 650px; height:150px;">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img style="width: 100px; height:100px; border-radius: 100px; margin-left:30px; " src="{{url +'get-image-user/' + user.image}}" *ngIf="user.image" />
+
+                        <img style="width: 100px; height: 100px; border-radius: 100px; margin-left:30px;" src="../../../assets/1.png" class="avatar-default" *ngIf="!user.image" />
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <a [routerLink]="['/perfil',user._id]">
+                                <h5 class="card-title">{{user.name + '' + user.surname}}</h5>
+                            </a>
+                            <p class="card-text">{{user.nick}}</p>
+
+                        </div>
+                    </div>
+
+                    <div class="positionbotones" *ngIf="user._id != indentity._id">
+                        <button class="btn btn-success" *ngIf="follows.indexOf(user._id) < 0" (click)="followUser(user._id)"><span class="fas fa-plus-circle"></span> Seguir</button>
+                        <!----Boton span---->
+                        <button class="btn btn-primary " *ngIf="follows.indexOf(user._id)>= 0" (mouseenter)="mouseEnter(user._id)" (mouseleave)="mouseLeave(user._id)" (click)="unfollowUser(user._id)" [class.btn-danger]="user._id == followUserOver">
+                            
+                            <span *ngIf="user._id == followUserOver; else following">
+                                <span class="fas fa-minus-circle"></span>Dejar de seguir</span>
+                            <ng-template #following>
+                                <span class="fas fa-user-friends"></span>Siguiendo
+                            </ng-template>
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-----Paginacion de usuarios -->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+
+                <li class="page-item" *ngIf="page > 1">
+                    <a class="page-link" [routerLink]="['/gente',prev_page]">Anterior</a>
+                </li>
+                &nbsp;&nbsp;
+                <li class="page-item" *ngIf="pages  != page">
+                    <a class="page-link" [routerLink]="['/gente',next_page]">Siguiente</a>
+                </li>
+
+            </ul>
+        </nav>
+    </div>
+
+</div>
+
+<div class="clearfix"></div>

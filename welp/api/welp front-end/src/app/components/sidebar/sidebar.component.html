@@ -1,0 +1,46 @@
+<div id="user-card" class="col-lg-4 card float-right">
+
+    <div class="avatar">
+
+        <img src="{{url + 'get-image-user/' + indentity.image}}" *ngIf="indentity.image" />
+        <img src="assets/users.png" *ngIf="!indentity.image" />
+    </div>
+    <div class="userinfo">
+        <a [routerLink]="['/perfil',indentity._id]" style="color:black;font-size:16px;">
+            {{indentity.name + ' ' + indentity.surname}}
+        </a>
+        <!-----Aqui incia uno de los errores---------->
+        <p class="nickname">{{indentity.nick}}</p>
+        <!----LA palabra INDENTITY en el video dice identity-->
+        <div class="clearfix">
+        </div>
+    </div>
+
+    <div class="stats" *ngIf="stats">
+        <div class="following-data">
+            <a href="#">
+                <span class="label-stats" style="color:black;font-size:15px;">Siguiendo </span>
+                <span class="number-stats" style="color:black;font-size:15px;">{{stats.following}}</span>
+            </a>
+
+        </div>
+        <div class="following-data">
+            <a href="#">
+                <span class="label-stats" style="color:black;font-size:15px;">Seguidores </span>
+                <span class="number-stats" style="color:black;font-size:15px;">{{stats.followed}}</span>
+            </a>
+
+        </div>
+        <div class="following-data">
+            <a href="#">
+                <span class="label-stats" style="color:black;font-size:15px;">Publicaciones </span>
+                <span class="number-stats" style="color:black;font-size:15px;">{{stats.publications}}</span>
+            </a>
+
+        </div>
+    </div>
+
+    <!----formularios  de publicaciones -->
+
+
+</div>
